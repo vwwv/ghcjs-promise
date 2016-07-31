@@ -1,10 +1,9 @@
 name:                ghcjs-promise
 version:             0.1.0.0
-synopsis:            Initial project template from stack
-description:         Please see README.md
-homepage:            https://github.com/githubuser/ghcjs-promise#readme
+synopsis:            Bidirectional bidings to javascript's promises.
+description:         Bidirectional bidings to javascript's promises.
+homepage:            https://github.com/vwwv/ghcjs-promise
 license:             BSD3
-license-file:        LICENSE
 author:              Alejandro Durán Pallarés
 maintainer:          vwwv@correo.ugr.es
 category:            Data
@@ -16,6 +15,10 @@ library
   hs-source-dirs:      src
   exposed-modules:     Data.Promise
   build-depends:       base >= 4.7 && < 5
+                     , ghcjs-base
+                    -- , uuid
+                     , random
+
   default-language:    Haskell2010
 
 source-repository head
