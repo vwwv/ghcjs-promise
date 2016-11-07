@@ -13,7 +13,8 @@ cabal-version:       >=1.10
 
 library
   hs-source-dirs:      src
-  exposed-modules:     Data.Promise
+  js-sources:          src/js/promise_functions.js
+  exposed-modules:     Data.JSVal.Promise
   build-depends:       base >= 4.7 && < 5
                      , ghcjs-base
                     -- , uuid

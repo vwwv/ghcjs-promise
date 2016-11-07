@@ -1,16 +1,18 @@
-resolver: lts-6.10
+resolver: nightly-2016-10-25
 packages:
 - '.'
 
 
-compiler: ghcjs-0.2.0.20160414_ghc-7.10.3
-compiler-check: match-exact
+
+compiler: ghcjs-0.2.1.820161025_ghc-8.0.1
+compiler-check: match-exact  
+
 setup-info:
   ghcjs:
     source:
-      ghcjs-0.2.0.20160414_ghc-7.10.3:
-        url: https://s3.amazonaws.com/ghcjs/ghcjs-0.2.0.20160414_ghc-7.10.3.tar.gz
-        sha1: 6d6f307503be9e94e0c96ef1308c7cf224d06be3
+      ghcjs-0.2.1.820161025_ghc-8.0.1:
+          url: http://tolysz.org/ghcjs/untested/ghc-8.0-2016-10-25-nightly-2016-10-25-820161025.tar.gz
+          sha1: ca05f23ab6af89803a9fa8ce7241ebdd2eee7dae
 
 extra-deps: []
 
