@@ -4,6 +4,7 @@ synopsis:            Bidirectional bidings to javascript's promise.
 description:         Bidirectional bidings to javascript's promise.
 homepage:            https://github.com/vwwv/ghcjs-promise
 license:             BSD3
+license-file:        LICENSE
 author:              Alejandro Durán Pallarés
 maintainer:          vwwv@correo.ugr.es
 category:            Data
