@@ -1,7 +1,7 @@
 name:                ghcjs-promise
 version:             0.1.0.0
-synopsis:            Bidirectional bidings to javascript's promises.
-description:         Bidirectional bidings to javascript's promises.
+synopsis:            Bidirectional bidings to javascript's promise.
+description:         Bidirectional bidings to javascript's promise.
 homepage:            https://github.com/vwwv/ghcjs-promise
 license:             BSD3
 author:              Alejandro Durán Pallarés

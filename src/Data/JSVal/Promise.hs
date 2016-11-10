@@ -2,6 +2,29 @@
            , OverloadedStrings
            #-}
 
+{-|
+
+Module      : Data.JSVal.Promise 
+Copyright   : (c) Alejandro Durán Pallarés, 2016
+License     : BSD3
+Maintainer  : vwwv@correo.ugr.es
+Stability   : experimental
+
+
+Data.JSVal.Promise defines `Promise`, a direct bind to javascript promise objects.
+
+- You can import/export them from javascript code using its `FromJSVal` and `ToJSVal` instances.
+
+- You can extract its value, blocking till computation has finished, using `await`. (you can safely call 
+  it several time from different threads, the  associated computation will run once, and then memorized)
+
+- You can create new promise (to possible use js side) containing arbitrary haskell code using `promise`.
+
+For some usage example, checkout this [blog entry](http://the.spaghetticodeball.xyz/haskell/javascript/2016/10/10/new-library-ghcjs-promise.html).
+
+-}
+
+
 module Data.JSVal.Promise( Promise()
                          , await
                          , promise
@@ -25,7 +48,8 @@ instance FromJSVal Promise where
 instance ToJSVal Promise where
       toJSVal   =  return . fromPromise
 
-
+-- | If the promise is return through "then", it will return `Right`;
+--   if it return through "catch", then it will return `Left`
 await   :: Promise -> IO (Either JSVal JSVal)
 await (Promise jsval) = do result <- js_await     jsval
                            x      <- js_attribute "result" result
@@ -34,7 +58,15 @@ await (Promise jsval) = do result <- js_await     jsval
                             then return (Right x)
                             else return (Left  x)
 
-
+-- | A `Right` value will be sent as a normal value through "then", a left
+--   value will be sent through "catch" (by javascript convention, representing 
+--   an exception).
+--
+--   The block will start executing immediately, no mater if there's something waiting
+--   for it or not.
+--
+--   If the execution block launches an exception, then the promise will be receive
+--   as "reject", the javascript value "new Error('Haskell side error')"
 promise :: IO (Either JSVal JSVal) -> IO Promise
 promise action = do ref     <- js_book_promise
                     promise <- js_set_promise ref
@@ -66,7 +98,7 @@ foreign import javascript safe
     js_attribute        :: JSString -> JSVal -> IO JSVal
 
 foreign import javascript safe 
-    "new Error('haskel side error')"
+    "new Error('Haskell side error')"
     create_error        :: IO JSVal
 
 
