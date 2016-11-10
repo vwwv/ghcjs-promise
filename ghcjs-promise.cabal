@@ -1,5 +1,5 @@
 name:                ghcjs-promise
-version:             0.1.0.0
+version:             0.1.0.1
 synopsis:            Bidirectional bidings to javascript's promise.
 description:         Bidirectional bidings to javascript's promise.
 homepage:            https://github.com/vwwv/ghcjs-promise
@@ -18,8 +18,6 @@ library
   exposed-modules:     Data.JSVal.Promise
   build-depends:       base >= 4.7 && < 5
                      , ghcjs-base
-                    -- , uuid
-                     , random
 
   default-language:    Haskell2010
 
