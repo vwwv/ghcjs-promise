@@ -51,12 +51,12 @@ instance ToJSVal Promise where
 -- | If the promise is return through "then", it will return `Right`;
 --   if it return through "catch", then it will return `Left`
 await   :: Promise -> IO (Either JSVal JSVal)
-await (Promise jsval) = do result <- js_await     jsval
-                           x      <- js_attribute "result" result
-                           ok     <- isTruthy <$> js_attribute "ok" result
-                           if ok
-                            then return (Right x)
-                            else return (Left  x)
+await (Promise jsval') = do result <- js_await     jsval'
+                            x      <- js_attribute "result" result
+                            ok     <- isTruthy <$> js_attribute "ok" result
+                            if ok
+                             then return (Right x)
+                             else return (Left  x)
 
 -- | A `Right` value will be sent as a normal value through "then", a left
 --   value will be sent through "catch" (by javascript convention, representing 
@@ -69,18 +69,18 @@ await (Promise jsval) = do result <- js_await     jsval
 --   as "reject", the javascript value "new Error('Haskell side error')"
 promise :: IO (Either JSVal JSVal) -> IO Promise
 promise action = do ref     <- js_book_promise
-                    promise <- js_set_promise ref
+                    promise' <- js_set_promise ref
                     myid    <- myThreadId
-                    forkIO $ do val_ <- try action
-                                case val_ of
-                                 
-                                 Right (Right x) -> js_do_resolve ref x
-                                 
-                                 Right (Left  x) -> js_do_reject  ref x
-                                 
-                                 Left  exc       -> do throwTo myid (exc::SomeException)
-                                                       js_do_reject  ref =<< create_error 
-                    return $ Promise promise
+                    _ <- forkIO $ do val_ <- try action
+                                     case val_ of
+
+                                      Right (Right x) -> js_do_resolve ref x
+
+                                      Right (Left  x) -> js_do_reject  ref x
+
+                                      Left  exc       -> do throwTo myid (exc::SomeException)
+                                                            js_do_reject  ref =<< create_error
+                    return $ Promise promise'
 -----------------------------------------------------------------------
 -----------------------------------------------------------------------
 
